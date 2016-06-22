@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Docufdsfdsmen dfssdt</title>
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+    	ymaps.ready(init);
+	});
+    function init(){     
+        ymaps.geolocation.get({
+		    provider: 'yandex',
+		    // Автоматически геокодируем полученный результат.
+		    autoReverseGeocode: true
+		}).then(function (result) {
+		    // Выведем в консоль данные, полученные в результате геокодирования объекта.
+		    var address = result.geoObjects.get(0).properties.get('metaDataProperty').GeocoderMetaData.text;
+		    console.log(address);
+		     $.ajax({
+		    	url: '/position',
+		    	type: 'POST',
+		    	dataType: 'html',
+		    	data: {address: address},
+		    })
+		});
+    }
+</script>
+</body>
+</html>
